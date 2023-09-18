@@ -1,0 +1,314 @@
+﻿@model CreateAccount
+
+@{
+	ViewData["Title"] = "Create";
+}
+
+<div>
+	<a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+<center><h4 style="background:blue;color:white">Bank Account Opening Form</h4></center>
+<hr />
+<div class="col-sm-12">
+	<div class="row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-4"><h3>Form Number:@ViewBag.Id</h3></div>
+		<div class="col-sm-3"><h3 id="currDate"></h3></div>
+		<div class="col-sm-4"><h3 id="currTime"> </h3></div>
+
+	</div>
+</div>
+
+<div class="container">
+
+	<div class="row">
+
+		<div class="col-md-12">
+			<form asp-asp-controller="Home" asp-action="Create" method="post" class="border border-secondary" style="padding:30px;border-radius:10px;background:linear-gradient(silver,white)">
+				<div class="col-sm-12">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="row">
+						<div class="form-group col-md-3">
+							<label asp-for="Title" class="control-label"></label>
+							<select asp-for="Title" id="titleDropdown" class="form-control" onchange="updateSexField(this)">
+								<option value="">Select Title</option>
+								<option value="1">Mr.</option>
+								<option value="2">Ms.</option>
+								<option value="3">Mrs.</option>
+								<option value="4">Mst.</option>
+								<option value="5">Baby</option>
+							</select>
+						</div>
+						<div class="form-group col-md-3">
+							<label asp-for="FirstName" class="control-label"></label>
+							<input asp-for="FirstName" class="form-control" placeholder="FirstName" />
+							<span asp-validation-for="FirstName" class="text-danger"></span>
+						</div>
+
+						<div class="form-group col-md-3">
+							<label asp-for="MiddleName" class="control-label"></label>
+							<input asp-for="MiddleName" class="form-control" placeholder="Last Name" />
+							<span asp-validation-for="MiddleName" class="text-danger"></span>
+						</div>
+
+						<div class="form-group col-md-3">
+							<label asp-for="LastName" class="control-label"></label>
+							<input asp-for="LastName" class="form-control" placeholder="Last Name" />
+							<span asp-validation-for="LastName" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label asp-for="DateOfBirth" class="control-label"></label>
+							<input asp-for="DateOfBirth" id="dateOfBirth" class="form-control" placeholder="Choose DOB" />
+							<span asp-validation-for="DateOfBirth" class="text-danger"></span>
+						</div>
+
+						<div class="form-group col-md-4">
+							<label asp-for="Age" class="control-label"></label>
+							<input type="text" id="Age" asp-for="Age" class="form-control" placeholder="Age" />
+
+						</div>
+						<div class="form-group col-md-4">
+							<label asp-for="MobileNumber" class="control-label"></label>
+							<input asp-for="MobileNumber" class="form-control" placeholder="Mobile No" />
+							<span asp-validation-for="MobileNumber" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="row">
+
+						<div class="form-group col-md-4">
+							<label asp-for="Email" class="control-label"></label>
+							<input asp-for="Email" class="form-control" placeholder="Enter Email Id" />
+							<span asp-validation-for="Email" class="text-danger"></span>
+						</div>
+						<br />
+
+						<div class="form-group col-md-4">
+							<label asp-for="Sex" class="control-label"></label>
+
+							<select class="form-control" id="sexInput" name="Sex">
+							</select>
+
+						</div>
+
+
+						<div class="form-group col-md-4">
+							<label asp-for="AccountType" class="control-label"></label>
+							<select asp-for="AccountType" class="form-control">
+								<option value="">Select Title</option>
+								<option value="1">Savings</option>
+								<option value="2">Current</option>
+								<option value="3">Recurring Deposits</option>
+								<option value="4">Term Loan</option>
+
+							</select>
+							<span asp-validation-for="AccountType" class="text-danger"></span>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="row">
+
+						<div class="form-group col-md-4">
+							<label asp-for="StdCode" class="control-label"></label>
+							<input asp-for="StdCode" class="form-control" placeholder="Enter StdCode" />
+							<span asp-validation-for="StdCode" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-4">
+							<label asp-for="Telephone" class="control-label"></label>
+							<input asp-for="Telephone" class="form-control" placeholder="Enter Telephone" />
+							<span asp-validation-for="Telephone" class="text-danger"></span>
+						</div>
+
+						<div class="form-group col-md-4">
+							<label asp-for="StateId" class="control-label">State</label>
+							<select asp-for="StateId" id="stateDropdown" class="form-control" asp-items="ViewBag.StateList">
+								<option>Select a State</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="row">
+
+						<div id="cityContainer">
+							<!-- Cities will be displayed here -->
+						</div>
+
+						<div class="form-group col-md-4">
+							<label asp-for="CityId" class="control-label"></label>
+							<select asp-for="CityId" class="form-control" asp-items="ViewBag.Citylist">
+								<option value="">Select a city</option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label asp-for="BranchId" class="control-label"></label>
+							<select asp-for="BranchId" class="form-control" asp-items="ViewBag.BranchList">
+								<option value="">Select Branch Name</option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label asp-for="LanguageId" class="control-label"></label>
+							<select asp-for="LanguageId" class="form-control" asp-items="ViewBag.LanguageList">
+								<option value="">Select Language</option>
+							</select>
+						</div>
+						<input value="" id="FormFillDate" type="hidden" name="FormFillDate" />
+						<input value="" id="FormFillTime" type="hidden" name="FormFillTime" />
+					</div>
+				</div>
+				<br />
+				<center>
+					<div class="form-group">
+						<input type="submit" value="Create" class="btn btn-primary" />
+						<input asp-action="Index" type="submit" value="Cancle" class="btn btn-danger" />
+					</div>
+				</center>
+
+
+			</form>
+		</div>
+
+	</div>
+
+</div>
+
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
+
+
+<script>
+	function updateSexField(selectElement) {
+		var selectedValue = selectElement.value;
+		var sexInput = document.getElementById("sexInput");
+		var show = document.getElementById("demo");
+
+		sexInput.innerHTML = '';
+
+
+		if (selectedValue === "1" || selectedValue === "4") {
+			sexInput.innerHTML = '<option value="1">Male<option>'
+
+		}
+
+		else if (selectedValue === "2" || selectedValue === "3" || selectedValue === "5") {
+			sexInput.innerHTML = '<option value="2">Female<option>'
+
+		}
+
+		else if (selectedValue === "") {
+			sexInput.innerHTML = '<option value="3">Other<option>'
+
+		}
+
+		else {
+
+			sexInput.value = "";
+		}
+	}
+</script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script>
+	$(document).ready(function () {
+
+
+		$('#dateOfBirth').change(function () {
+
+			var dateOfBirth = $('#dateOfBirth').val();
+
+			console.log(dateOfBirth);
+			$.ajax({
+				url: '/Home/CalulateAgeFromDob',
+				type: 'GET',
+				dataType: 'json',
+				data: { dateOfBirth: dateOfBirth },
+				success: function (response) {
+					console.log(response);
+					$("#Age").val(response);
+				},
+				error: function () {
+					alert('Error!');
+				}
+			});
+		});
+
+	});
+</script>
+
+
+<script>
+	$(document).ready(function () {
+		$("#StateId").change(function () {
+			var StateId = $(this).val();
+			debugger
+			$.ajax({
+				type: "post",
+				url: "/Home/GetCityList?StateId=" + StateId,
+				contentType: "html",
+				success: function (response) {
+					debugger
+					$("#CityId").empty();
+					$("#CityId").append(response);
+				}
+			})
+		})
+		setInterval(function () {
+			$.ajax({
+				type: "get",
+				url: "/Home/GetCurrentDtTime",
+				contentType: "html",
+				success: function (response) {
+					$("#currDate").html("Date : " + response[0]);
+					$("#currTime").html("Time : " + response[1]);
+
+					$("#FormFillDate").val(response[0]);
+					$("#FormFillTime").val(response[1]);
+
+				}
+			})
+		}, 1000);
+	})
+</script>
+
+<script>
+	$(document).ready(function () {
+		$('#stateDropdown').change(function () {
+
+			var selectedStateId = $(this).val();
+			console.log(selectedStateId, this)
+			$.get('/Home/GetCityList?StateCode=' + selectedStateId, function (data) {
+				$('#CityId').html('');
+				$('#CityId').append('<option value="0">-Select City-</option>');
+				console.log(data);
+				for (let obj of data) { 
+					debugger
+					let option = document.createElement('option');
+					option.text = obj.cityName;
+					option.value = obj.cityCode;
+					$('#CityId').append(option);
+				}
+			});
+		});
+	});
+</script>
+
+
+
+
