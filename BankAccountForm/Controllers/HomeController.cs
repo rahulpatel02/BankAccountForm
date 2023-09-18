@@ -74,8 +74,8 @@ namespace BankAccountForm.Controllers
             var stateData = _context.States.ToList();
 
             ViewBag.StateList = new SelectList(stateData, "StateCode", "StateName");
-            var branchData = _context.Branches.ToList();
-            ViewBag.BranchList = new SelectList(branchData, "Branch_code", "Branch_name");
+            //var branchData = _context.Branches.ToList();
+            //ViewBag.BranchList = new SelectList(branchData, "Branch_code", "Branch_name");
 
             var languageData = _context.Languages.ToList();
             ViewBag.LanguageList = new SelectList(languageData, "Laanguage_Code", "Language_Name");
@@ -158,5 +158,13 @@ namespace BankAccountForm.Controllers
 
         }
 
-    }
+		public JsonResult GetBranch(int citycode)
+		{
+			List<Branch> selectList = _context.Branches.Where(x => x.Branch_City_code == citycode).ToList();
+			ViewBag.Branch = new SelectList(selectList, "Branch_code", "Branch_name");
+			return Json(selectList);
+
+		}
+
+	}
 }

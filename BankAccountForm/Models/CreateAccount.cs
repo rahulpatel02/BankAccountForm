@@ -19,7 +19,6 @@ namespace BankAccountForm.Models
 		public string FirstName { get; set; }
 		public string MiddleName { get; set; }
 
-		[Required]
 		public string LastName { get; set; }
 
 		[Required]

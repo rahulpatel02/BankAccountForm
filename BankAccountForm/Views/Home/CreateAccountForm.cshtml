@@ -48,13 +48,13 @@
 						<div class="form-group col-md-3">
 							<label asp-for="MiddleName" class="control-label"></label>
 							<input asp-for="MiddleName" class="form-control" placeholder="Last Name" />
-							<span asp-validation-for="MiddleName" class="text-danger"></span>
+							@* <span asp-validation-for="MiddleName" class="text-danger"></span> *@
 						</div>
 
 						<div class="form-group col-md-3">
 							<label asp-for="LastName" class="control-label"></label>
 							<input asp-for="LastName" class="form-control" placeholder="Last Name" />
-							<span asp-validation-for="LastName" class="text-danger"></span>
+							@* <span asp-validation-for="LastName" class="text-danger"></span> *@
 						</div>
 					</div>
 				</div>
@@ -62,6 +62,15 @@
 
 				<div class="col-sm-12">
 					<div class="row">
+
+						<div class="form-group col-md-4">
+							<label asp-for="Sex" class="control-label"></label>
+
+							<select class="form-control" id="sexInput" name="Sex">
+							</select>
+
+						</div>
+
 						<div class="form-group col-md-4">
 							<label asp-for="DateOfBirth" class="control-label"></label>
 							<input asp-for="DateOfBirth" id="dateOfBirth" class="form-control" placeholder="Choose DOB" />
@@ -73,51 +82,15 @@
 							<input type="text" id="Age" asp-for="Age" class="form-control" placeholder="Age" />
 
 						</div>
-						<div class="form-group col-md-4">
-							<label asp-for="MobileNumber" class="control-label"></label>
-							<input asp-for="MobileNumber" class="form-control" placeholder="Mobile No" />
-							<span asp-validation-for="MobileNumber" class="text-danger"></span>
-						</div>
+						
 					</div>
 				</div>
 
 				<div class="col-sm-12">
 					<div class="row">
 
-						<div class="form-group col-md-4">
-							<label asp-for="Email" class="control-label"></label>
-							<input asp-for="Email" class="form-control" placeholder="Enter Email Id" />
-							<span asp-validation-for="Email" class="text-danger"></span>
-						</div>
+						
 						<br />
-
-						<div class="form-group col-md-4">
-							<label asp-for="Sex" class="control-label"></label>
-
-							<select class="form-control" id="sexInput" name="Sex">
-							</select>
-
-						</div>
-
-
-						<div class="form-group col-md-4">
-							<label asp-for="AccountType" class="control-label"></label>
-							<select asp-for="AccountType" class="form-control">
-								<option value="">Select Title</option>
-								<option value="1">Savings</option>
-								<option value="2">Current</option>
-								<option value="3">Recurring Deposits</option>
-								<option value="4">Term Loan</option>
-
-							</select>
-							<span asp-validation-for="AccountType" class="text-danger"></span>
-						</div>
-
-					</div>
-				</div>
-
-				<div class="col-sm-12">
-					<div class="row">
 
 						<div class="form-group col-md-4">
 							<label asp-for="StdCode" class="control-label"></label>
@@ -131,11 +104,40 @@
 						</div>
 
 						<div class="form-group col-md-4">
+							<label asp-for="MobileNumber" class="control-label"></label>
+							<input asp-for="MobileNumber" class="form-control" placeholder="Mobile No" />
+							<span asp-validation-for="MobileNumber" class="text-danger"></span>
+						</div>
+
+
+						
+
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label asp-for="Email" class="control-label"></label>
+							<input asp-for="Email" class="form-control" placeholder="Enter Email Id" />
+							<span asp-validation-for="Email" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-4">
 							<label asp-for="StateId" class="control-label">State</label>
 							<select asp-for="StateId" id="stateDropdown" class="form-control" asp-items="ViewBag.StateList">
 								<option>Select a State</option>
 							</select>
 						</div>
+
+
+						<div class="form-group col-md-4">
+							<label class="control-label">City</label>
+							<select asp-for="CityId"  class="form-control" asp-items="ViewBag.Citylist">
+								<option value="">Select a city</option>
+							</select>
+						</div>
+
+						
 					</div>
 				</div>
 
@@ -145,21 +147,27 @@
 						<div id="cityContainer">
 							<!-- Cities will be displayed here -->
 						</div>
-
+						
 						<div class="form-group col-md-4">
-							<label asp-for="CityId" class="control-label"></label>
-							<select asp-for="CityId" class="form-control" asp-items="ViewBag.Citylist">
-								<option value="">Select a city</option>
-							</select>
-						</div>
-						<div class="form-group col-md-4">
-							<label asp-for="BranchId" class="control-label"></label>
+							<label class="control-label">Branch Name</label>
 							<select asp-for="BranchId" class="form-control" asp-items="ViewBag.BranchList">
 								<option value="">Select Branch Name</option>
 							</select>
 						</div>
 						<div class="form-group col-md-4">
-							<label asp-for="LanguageId" class="control-label"></label>
+							<label class="control-label">Type of Account</label>
+							<select asp-for="AccountType" class="form-control">
+								<option value="">Select Title</option>
+								<option value="1">Savings</option>
+								<option value="2">Current</option>
+								<option value="3">Recurring Deposits</option>
+								<option value="4">Term Loan</option>
+
+							</select>
+							<span asp-validation-for="AccountType" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-4">
+							<label  class="control-label">Preferred Language Of Communication</label>
 							<select asp-for="LanguageId" class="form-control" asp-items="ViewBag.LanguageList">
 								<option value="">Select Language</option>
 							</select>
@@ -303,6 +311,29 @@
 					option.text = obj.cityName;
 					option.value = obj.cityCode;
 					$('#CityId').append(option);
+				}
+			});
+		});
+	});
+</script>
+
+
+<script>
+	$(document).ready(function () {
+		$('#CityId').change(function () {
+
+			var selectedCityId = $(this).val();
+			console.log(selectedCityId, this)
+			$.get('/Home/GetBranch?citycode=' + selectedCityId, function (data) {
+				$('#BranchId').html('');
+				$('#BranchId').append('<option value="0">-Select Branch-</option>');
+				console.log(data);
+				for (let obj of data) {
+					debugger
+					let option = document.createElement('option');
+					option.value= obj.branch_code;
+					option.text = obj.branch_name;
+					$('#BranchId').append(option);
 				}
 			});
 		});
